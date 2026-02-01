@@ -1,3 +1,4 @@
+// Package draw provides drawing primitives for braille canvases.
 package draw
 
 import (
