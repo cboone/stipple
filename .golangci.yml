@@ -1,0 +1,70 @@
+# golangci-lint configuration for brodot
+# https://golangci-lint.run/usage/configuration/
+
+run:
+  timeout: 5m
+
+linters:
+  enable:
+    # Quality
+    - errcheck
+    - gocritic
+    - gocyclo
+    - gosimple
+    - govet
+    - staticcheck
+    - unused
+    # Style
+    - godot
+    - goimports
+    - revive
+    # Bugs
+    - bodyclose
+    - durationcheck
+    - nilerr
+
+linters-settings:
+  gocyclo:
+    min-complexity: 15
+
+  godot:
+    scope: declarations
+    capital: false
+
+  goimports:
+    local-prefixes: github.com/cboone/brodot
+
+  revive:
+    rules:
+      - name: blank-imports
+      - name: context-as-argument
+      - name: context-keys-type
+      - name: dot-imports
+      - name: error-return
+      - name: error-strings
+      - name: error-naming
+      - name: exported
+      - name: increment-decrement
+      - name: indent-error-flow
+      - name: package-comments
+      - name: range
+      - name: receiver-naming
+      - name: time-naming
+      - name: unexported-return
+      - name: var-declaration
+      - name: var-naming
+
+issues:
+  exclude-rules:
+    # Relax rules for test files
+    - path: _test\.go
+      linters:
+        - errcheck
+        - gocritic
+        - gocyclo
+
+    # Relax rules for examples
+    - path: examples/
+      linters:
+        - errcheck
+        - gocritic
