@@ -206,13 +206,13 @@ func TestLineSteepSlope(t *testing.T) {
 func TestLineReversedCoordinates(t *testing.T) {
 	// Test drawing lines with reversed start/end coordinates
 	tests := []struct {
-		name                           string
-		startX, startY, endX, endY     float64
-		checkX, checkY                 int
+		name                       string
+		startX, startY, endX, endY float64
+		checkX, checkY             int
 	}{
+		{"diagonal reversed", 7, 7, 0, 0, 3, 3},
 		{"horizontal reversed", 8, 1, 1, 1, 4, 1},
 		{"vertical reversed", 1, 10, 1, 1, 1, 5},
-		{"diagonal reversed", 7, 7, 0, 0, 3, 3},
 	}
 
 	for _, testCase := range tests {
