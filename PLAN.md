@@ -457,7 +457,12 @@ func (c ColorRGB) ANSI() string
 
 ## 10. Image Support (optional, with build tags)
 
-### 10.1 Image Conversion (from rsille)
+### 10.1 Image Conversion (from rsille and jpverkamp)
+
+The image conversion approach originates from JP Verkamp's Racket implementation:
+- Convert each 2×4 pixel block to grayscale
+- Compare against a threshold (default ~0.75) to determine dot state
+- Out-of-bounds pixels default to 0 (off) for graceful edge handling
 
 ```go
 //go:build with_image
@@ -469,9 +474,10 @@ func (c *Canvas) ToImage() image.Image
 
 type ImageOption func(*imageConfig)
 func WithDithering(d DitheringMethod) ImageOption
-func WithThreshold(t uint8) ImageOption
+func WithThreshold(t float64) ImageOption  // 0.0-1.0, default 0.75
 func WithGrayscale() ImageOption
 func WithInvert() ImageOption
+func WithAutoThreshold() ImageOption  // Otsu's method
 ```
 
 ---
@@ -781,13 +787,39 @@ c := canvas.New(0, 0)  // Creates minimum 2x4 canvas (one cell)
 
 ---
 
-## 15. References
+## 15. Historical Context & Attribution
 
-### Original and Notable Implementations Reviewed:
+The technique of using Unicode Braille characters (U+2800-U+28FF) for terminal pixel graphics emerged in early 2014 from multiple sources:
+
+- **[asciimoo/drawille](https://github.com/asciimoo/drawille)** (Python) - Created April 22, 2014. Popularized the technique and spawned 20+ ports.
+- **[JP Verkamp's Racket implementation](https://blog.jverkamp.com/2014/05/30/braille-unicode-pixelation/)** ([source](https://github.com/jpverkamp/small-projects/blob/master/blog/braille-images.rkt)) - Published May 30, 2014. Provided clear explanation of the braille encoding and image conversion with threshold-based approach.
+
+Both implementations recognized the key insight: the Braille Unicode block encodes all 256 combinations of an 8-dot pattern in a 2×4 grid, giving 8× pixel density improvement over standard characters.
+
+### Historical Note on Braille Dot Ordering
+
+As JP Verkamp noted, the dot numbering (1,4,2,5,3,6,7,8 rather than sequential) exists because the original 6-dot Braille system predates the 8-dot extension. Dots 7 and 8 were added later at the bottom:
+
+```
+Classic 6-dot:    Extended 8-dot:
+  1  4              1  4
+  2  5              2  5
+  3  6              3  6
+                    7  8
+```
+
+This historical quirk means the bit mapping isn't intuitive, but all implementations must follow it for correct Unicode encoding.
+
+---
+
+## 16. References
+
+### Notable Implementations Reviewed:
 
 | Implementation | Language | Notable Features |
 |----------------|----------|------------------|
-| [asciimoo/drawille](https://github.com/asciimoo/drawille) | Python | Original, Canvas + Turtle |
+| [asciimoo/drawille](https://github.com/asciimoo/drawille) | Python | Popularized technique, Canvas + Turtle |
+| [jpverkamp/braille-images.rkt](https://github.com/jpverkamp/small-projects/blob/master/blog/braille-images.rkt) | Racket | Clear algorithm explanation, threshold-based image conversion |
 | [exrook/drawille-go](https://github.com/exrook/drawille-go) | Go | Basic Go port |
 | [Kerrigan29a/drawille-go](https://github.com/Kerrigan29a/drawille-go) | Go | Bezier, inverse Y, algorithms |
 | [madbence/node-drawille](https://github.com/madbence/node-drawille) | Node.js | Simple API, ecosystem |
