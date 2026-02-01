@@ -1,4 +1,4 @@
-// Demo program for brodot v0.2.0
+// Demo program for brodot v0.3.0
 package main
 
 import (
@@ -9,7 +9,7 @@ import (
 )
 
 func main() {
-	fmt.Println("brodot v0.2.0 Demo")
+	fmt.Println("brodot v0.3.0 Demo")
 	fmt.Println("==================")
 	fmt.Println()
 
@@ -132,4 +132,38 @@ func main() {
 	draw.Line(c11, centerX, centerY, 0, 9)   // West
 	draw.Line(c11, centerX, centerY, 0, 0)   // Northwest
 	fmt.Println(c11.Frame())
+	fmt.Println()
+
+	// Demo 12: Rectangle outline
+	fmt.Println("12. Rectangle outline:")
+	c12 := canvas.New(40, 20)
+	draw.Rectangle(c12, 5, 2, 30, 16)
+	fmt.Println(c12.Frame())
+	fmt.Println()
+
+	// Demo 13: Filled rectangle
+	fmt.Println("13. Filled rectangle:")
+	c13 := canvas.New(40, 20)
+	draw.RectangleFilled(c13, 5, 2, 30, 16)
+	fmt.Println(c13.Frame())
+	fmt.Println()
+
+	// Demo 14: Multiple rectangles (nested)
+	fmt.Println("14. Nested rectangles:")
+	c14 := canvas.New(40, 24)
+	draw.Rectangle(c14, 2, 2, 36, 20)
+	draw.Rectangle(c14, 6, 4, 28, 16)
+	draw.Rectangle(c14, 10, 6, 20, 12)
+	draw.Rectangle(c14, 14, 8, 12, 8)
+	fmt.Println(c14.Frame())
+	fmt.Println()
+
+	// Demo 15: Wall-like rectangles (Maze Wars preview)
+	fmt.Println("15. Wall-like rectangles (Maze Wars preview):")
+	c15 := canvas.New(60, 32)
+	// Far wall (small, centered)
+	draw.RectangleFilled(c15, 20, 8, 20, 16)
+	// Side walls (trapezoid approximation with rectangles)
+	draw.Rectangle(c15, 5, 2, 50, 28)
+	fmt.Println(c15.Frame())
 }
