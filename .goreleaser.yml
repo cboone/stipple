@@ -1,0 +1,53 @@
+# goreleaser configuration for brodot
+# https://goreleaser.com
+
+version: 2
+
+# brodot is a library, not a binary
+builds:
+  - skip: true
+
+changelog:
+  sort: asc
+  groups:
+    - title: Features
+      regexp: '^.*?feat(\([[:word:]]+\))??!?:.+$'
+      order: 0
+    - title: Bug Fixes
+      regexp: '^.*?fix(\([[:word:]]+\))??!?:.+$'
+      order: 1
+    - title: Documentation
+      regexp: '^.*?docs(\([[:word:]]+\))??!?:.+$'
+      order: 2
+    - title: Performance
+      regexp: '^.*?perf(\([[:word:]]+\))??!?:.+$'
+      order: 3
+    - title: Refactoring
+      regexp: '^.*?refactor(\([[:word:]]+\))??!?:.+$'
+      order: 4
+    - title: Tests
+      regexp: '^.*?test(\([[:word:]]+\))??!?:.+$'
+      order: 5
+    - title: Build
+      regexp: '^.*?(build|ci)(\([[:word:]]+\))??!?:.+$'
+      order: 6
+    - title: Other
+      order: 999
+  filters:
+    exclude:
+      - "^chore:"
+      - "^style:"
+
+release:
+  header: |
+    ## brodot {{ .Tag }}
+
+    A braille graphics rendering library for Go.
+
+    ### Installation
+
+    ```bash
+    go get github.com/cboone/brodot@{{ .Tag }}
+    ```
+  footer: |
+    **Full Changelog**: https://github.com/cboone/brodot/compare/{{ .PreviousTag }}...{{ .Tag }}
