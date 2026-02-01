@@ -1,4 +1,4 @@
-# go-drawille Implementation Plan
+# brodot Implementation Plan
 
 A comprehensive Go port of drawille that incorporates the best features from 20+ implementations across different languages.
 
@@ -21,7 +21,7 @@ This plan synthesizes learnings from the original Python drawille and its ports 
 ### 1.1 Package Structure
 
 ```
-go-drawille/
+brodot/
 ├── canvas/           # Core canvas implementation
 │   ├── canvas.go     # Main Canvas struct and methods
 │   ├── braille.go    # Braille character encoding/decoding
@@ -460,6 +460,7 @@ func (c ColorRGB) ANSI() string
 ### 10.1 Image Conversion (from rsille and jpverkamp)
 
 The image conversion approach originates from JP Verkamp's Racket implementation:
+
 - Convert each 2×4 pixel block to grayscale
 - Compare against a threshold (default ~0.75) to determine dot state
 - Out-of-bounds pixels default to 0 (off) for graceful edge handling
@@ -487,6 +488,7 @@ func WithAutoThreshold() ImageOption  // Otsu's method
 ### 11.1 Unit Tests
 
 **Braille Encoding Tests:**
+
 ```go
 func TestPixelToBraille(t *testing.T) {
     tests := []struct{
@@ -502,6 +504,7 @@ func TestPixelToBraille(t *testing.T) {
 ```
 
 **Canvas Operations:**
+
 ```go
 func TestCanvasSetGet(t *testing.T)
 func TestCanvasToggle(t *testing.T)
@@ -514,6 +517,7 @@ func TestCanvasConcurrentAccess(t *testing.T)
 ### 11.2 Drawing Algorithm Tests
 
 **Line Drawing (Bresenham):**
+
 ```go
 func TestLineHorizontal(t *testing.T)
 func TestLineVertical(t *testing.T)
@@ -522,12 +526,14 @@ func TestLineSymmetry(t *testing.T)  // Line(a,b) == Line(b,a)
 ```
 
 **Circle Drawing:**
+
 ```go
 func TestCircleSymmetry(t *testing.T)  // 8-way symmetry
 func TestCircleCompleteness(t *testing.T)  // No gaps
 ```
 
 **Bezier Curves:**
+
 ```go
 func TestQuadraticBezierEndpoints(t *testing.T)
 func TestCubicBezierEndpoints(t *testing.T)
@@ -553,6 +559,7 @@ func TestGoldenSineWave(t *testing.T) {
 ```
 
 **Golden files to create:**
+
 - `sine_wave.golden` - Basic sine wave
 - `circle.golden` - Circle at various sizes
 - `turtle_spiral.golden` - Turtle-drawn spiral
@@ -660,6 +667,7 @@ func FuzzCanvasSet(f *testing.F) {
 ### 11.9 Integration Tests
 
 **End-to-end animation test:**
+
 ```go
 func TestAnimationIntegration(t *testing.T) {
     c := canvas.New(80, 40)
@@ -684,12 +692,14 @@ func TestAnimationIntegration(t *testing.T) {
 ## 12. Implementation Phases
 
 ### Phase 1: Core Foundation
+
 1. Braille encoding/decoding
 2. Basic Canvas (Set, Unset, Toggle, Get, Clear, Frame)
 3. Functional options
 4. Unit tests for core
 
 ### Phase 2: Drawing Primitives
+
 1. Bresenham line algorithm
 2. Bresenham circle algorithm
 3. Bezier curves (quadratic and cubic)
@@ -697,36 +707,42 @@ func TestAnimationIntegration(t *testing.T) {
 5. Golden file tests
 
 ### Phase 3: Turtle Graphics
+
 1. Basic turtle (Forward, Backward, Left, Right)
 2. Pen up/down
 3. Extended commands
 4. Example programs
 
 ### Phase 4: Canvas2D API
+
 1. Path operations
 2. Transformations (translate, rotate, scale)
 3. State stack (save/restore)
 4. Fill and stroke
 
 ### Phase 5: Animation Framework
+
 1. Animation loop
 2. Drawable interface
 3. Easing functions
 4. Timing control
 
 ### Phase 6: Plotting
+
 1. Function plotting
 2. Data series (scatter, line, bar)
 3. Axes and labels
 4. Multiple series support
 
 ### Phase 7: Advanced Features
+
 1. 3D projection
 2. Color support
 3. Text rendering
 4. Image conversion (optional)
 
 ### Phase 8: Polish
+
 1. Documentation
 2. Performance optimization
 3. Additional examples
@@ -739,6 +755,7 @@ func TestAnimationIntegration(t *testing.T) {
 ### 13.1 Coordinate Types
 
 Use `float64` for all coordinates (like rsille) rather than `int`:
+
 - Allows sub-pixel positioning
 - Enables smooth animations
 - Natural for mathematical functions
@@ -751,6 +768,7 @@ Most drawing operations silently ignore out-of-bounds coordinates (like most imp
 ### 13.3 Thread Safety
 
 Canvas uses `sync.RWMutex`:
+
 - Multiple goroutines can read simultaneously
 - Write operations are serialized
 - Animation framework handles locking
@@ -835,46 +853,46 @@ This historical quirk means the bit mapping isn't intuitive, but all implementat
 
 ### Notable Implementations Reviewed:
 
-| Implementation | Language | Year | Notable Features |
-|----------------|----------|------|------------------|
-| [aempirei/Chat-Art](https://github.com/aempirei/Chat-Art) | C/C++ | 2013 | **Earliest known**, pgmtobraille image converter |
-| [asciimoo/drawille](https://github.com/asciimoo/drawille) | Python | 2014 | Popularized technique, Canvas + Turtle |
-| [jpverkamp/braille-images.rkt](https://github.com/jpverkamp/small-projects/blob/master/blog/braille-images.rkt) | Racket | 2014 | Clear algorithm explanation, threshold-based |
-| [exrook/drawille-go](https://github.com/exrook/drawille-go) | Go | 2014 | Basic Go port |
-| [Kerrigan29a/drawille-go](https://github.com/Kerrigan29a/drawille-go) | Go | 2015 | Bezier, inverse Y, Bresenham algorithms |
-| [madbence/node-drawille](https://github.com/madbence/node-drawille) | Node.js | 2014 | Simple API, powers vtop |
-| [madbence/node-drawille-canvas](https://github.com/madbence/node-drawille-canvas) | Node.js | 2014 | HTML5 Canvas 2D API |
-| [ftxqxd/drawille-rs](https://github.com/ftxqxd/drawille-rs) | Rust | 2015 | Turtle, 8 terminal colors |
-| [nidhoggfgg/rsille](https://github.com/nidhoggfgg/rsille) | Rust | 2023 | Animation framework, 3D, image, Game of Life |
-| [asciimoo/lua-drawille](https://github.com/asciimoo/lua-drawille) | Lua | 2014 | 3D support, L-systems, Game of Life, DDL |
-| [saiftynet/Term-Graille](https://github.com/saiftynet/Term-Graille) | Perl | 2021 | Thick lines, menus, audio, sprites |
-| [sunetos/TextPlots.jl](https://github.com/sunetos/TextPlots.jl) | Julia | 2014 | Elegant function/data plotting |
-| [dheera/python-termgraphics](https://github.com/dheera/python-termgraphics) | Python | 2017 | ANSI colors, ASCII fallback, numpy |
-| [null93/drawille](https://github.com/null93/drawille) | Java | 2017 | Clean OO design, Maven build |
-| [Huulivoide/libdrawille](https://github.com/Huulivoide/libdrawille) | C | 2016 | Low-level, benchmarks, CMake |
-| [Nirei/vrawille](https://github.com/Nirei/vrawille) | V | 2020 | V language port, stbi image support |
-| [hpjansson/chafa](https://github.com/hpjansson/chafa) | C | 2018 | Comprehensive: braille, sixel, kitty, iTerm2 |
+| Implementation                                                                                                  | Language | Year | Notable Features                                 |
+| --------------------------------------------------------------------------------------------------------------- | -------- | ---- | ------------------------------------------------ |
+| [aempirei/Chat-Art](https://github.com/aempirei/Chat-Art)                                                       | C/C++    | 2013 | **Earliest known**, pgmtobraille image converter |
+| [asciimoo/drawille](https://github.com/asciimoo/drawille)                                                       | Python   | 2014 | Popularized technique, Canvas + Turtle           |
+| [jpverkamp/braille-images.rkt](https://github.com/jpverkamp/small-projects/blob/master/blog/braille-images.rkt) | Racket   | 2014 | Clear algorithm explanation, threshold-based     |
+| [exrook/drawille-go](https://github.com/exrook/drawille-go)                                                     | Go       | 2014 | Basic Go port                                    |
+| [Kerrigan29a/drawille-go](https://github.com/Kerrigan29a/drawille-go)                                           | Go       | 2015 | Bezier, inverse Y, Bresenham algorithms          |
+| [madbence/node-drawille](https://github.com/madbence/node-drawille)                                             | Node.js  | 2014 | Simple API, powers vtop                          |
+| [madbence/node-drawille-canvas](https://github.com/madbence/node-drawille-canvas)                               | Node.js  | 2014 | HTML5 Canvas 2D API                              |
+| [ftxqxd/drawille-rs](https://github.com/ftxqxd/drawille-rs)                                                     | Rust     | 2015 | Turtle, 8 terminal colors                        |
+| [nidhoggfgg/rsille](https://github.com/nidhoggfgg/rsille)                                                       | Rust     | 2023 | Animation framework, 3D, image, Game of Life     |
+| [asciimoo/lua-drawille](https://github.com/asciimoo/lua-drawille)                                               | Lua      | 2014 | 3D support, L-systems, Game of Life, DDL         |
+| [saiftynet/Term-Graille](https://github.com/saiftynet/Term-Graille)                                             | Perl     | 2021 | Thick lines, menus, audio, sprites               |
+| [sunetos/TextPlots.jl](https://github.com/sunetos/TextPlots.jl)                                                 | Julia    | 2014 | Elegant function/data plotting                   |
+| [dheera/python-termgraphics](https://github.com/dheera/python-termgraphics)                                     | Python   | 2017 | ANSI colors, ASCII fallback, numpy               |
+| [null93/drawille](https://github.com/null93/drawille)                                                           | Java     | 2017 | Clean OO design, Maven build                     |
+| [Huulivoide/libdrawille](https://github.com/Huulivoide/libdrawille)                                             | C        | 2016 | Low-level, benchmarks, CMake                     |
+| [Nirei/vrawille](https://github.com/Nirei/vrawille)                                                             | V        | 2020 | V language port, stbi image support              |
+| [hpjansson/chafa](https://github.com/hpjansson/chafa)                                                           | C        | 2018 | Comprehensive: braille, sixel, kitty, iTerm2     |
 
 ### Additional Implementations (not reviewed in detail)
 
-| Implementation | Language | Notes |
-|----------------|----------|-------|
-| [hoelzro/term-drawille](https://github.com/hoelzro/term-drawille) | Perl 5 | CPAN: Term::Drawille |
-| [yamadapc/haskell-drawille](https://github.com/yamadapc/haskell-drawille) | Haskell | Functional approach |
-| [mkremins/drawille-clj](https://github.com/mkremins/drawille-clj) | Clojure | Lisp variant |
-| [Goheeca/cl-drawille](https://github.com/Goheeca/cl-drawille) | Common Lisp | Full CL implementation |
-| [PMunch/drawille-nim](https://github.com/PMunch/drawille-nim) | Nim | Systems language port |
-| [mydzor/bash-drawille](https://github.com/mydzor/bash-drawille) | Bash | Pure shell implementation |
-| [whatthejeff/php-drawille](https://github.com/whatthejeff/php-drawille) | PHP | Web server compatible |
-| [liam-middlebrook/drawille-sharp](https://github.com/liam-middlebrook/drawille-sharp) | C# | .NET implementation |
-| [l-a-i-n/drawille-plusplus](https://github.com/l-a-i-n/drawille-plusplus) | C++ | Object-oriented C++ |
-| [massn/elixir-drawille](https://github.com/massn/elixir-drawille) | Elixir | BEAM/Erlang ecosystem |
+| Implementation                                                                        | Language    | Notes                     |
+| ------------------------------------------------------------------------------------- | ----------- | ------------------------- |
+| [hoelzro/term-drawille](https://github.com/hoelzro/term-drawille)                     | Perl 5      | CPAN: Term::Drawille      |
+| [yamadapc/haskell-drawille](https://github.com/yamadapc/haskell-drawille)             | Haskell     | Functional approach       |
+| [mkremins/drawille-clj](https://github.com/mkremins/drawille-clj)                     | Clojure     | Lisp variant              |
+| [Goheeca/cl-drawille](https://github.com/Goheeca/cl-drawille)                         | Common Lisp | Full CL implementation    |
+| [PMunch/drawille-nim](https://github.com/PMunch/drawille-nim)                         | Nim         | Systems language port     |
+| [mydzor/bash-drawille](https://github.com/mydzor/bash-drawille)                       | Bash        | Pure shell implementation |
+| [whatthejeff/php-drawille](https://github.com/whatthejeff/php-drawille)               | PHP         | Web server compatible     |
+| [liam-middlebrook/drawille-sharp](https://github.com/liam-middlebrook/drawille-sharp) | C#          | .NET implementation       |
+| [l-a-i-n/drawille-plusplus](https://github.com/l-a-i-n/drawille-plusplus)             | C++         | Object-oriented C++       |
+| [massn/elixir-drawille](https://github.com/massn/elixir-drawille)                     | Elixir      | BEAM/Erlang ecosystem     |
 
 ### Related Tools & Prior Art
 
-| Tool | Description |
-|------|-------------|
-| [Sixel](https://en.wikipedia.org/wiki/Sixel) | DEC's 1980s bitmap graphics for terminals (6 pixels high) |
-| [libsixel](https://saitoha.github.io/libsixel/) | Modern sixel encoder/decoder library |
-| [Kitty Graphics Protocol](https://sw.kovidgoyal.net/kitty/graphics-protocol/) | Modern terminal graphics, true color, animations |
-| [timg](https://github.com/hzeller/timg) | Terminal image/video viewer using various methods |
+| Tool                                                                          | Description                                               |
+| ----------------------------------------------------------------------------- | --------------------------------------------------------- |
+| [Sixel](https://en.wikipedia.org/wiki/Sixel)                                  | DEC's 1980s bitmap graphics for terminals (6 pixels high) |
+| [libsixel](https://saitoha.github.io/libsixel/)                               | Modern sixel encoder/decoder library                      |
+| [Kitty Graphics Protocol](https://sw.kovidgoyal.net/kitty/graphics-protocol/) | Modern terminal graphics, true color, animations          |
+| [timg](https://github.com/hzeller/timg)                                       | Terminal image/video viewer using various methods         |

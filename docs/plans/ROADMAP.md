@@ -1,15 +1,17 @@
-# go-drawille Roadmap
+# brodot Roadmap
 
 This document defines v1 priorities based on Maze Wars as the primary consumer, plus a roadmap for later major releases.
 
 ## v1.0: Maze Wars Core
 
 ### Goals
+
 - Fast, predictable braille rendering for a first person maze view.
 - Lightweight UI overlays for HUD, minimap, and status text.
 - Keep core packages dependency free.
 
 ### Non-goals
+
 - Animation framework or plotting utilities.
 - HTML5 Canvas style 2D context.
 - Image import and export.
@@ -17,6 +19,7 @@ This document defines v1 priorities based on Maze Wars as the primary consumer, 
 - Thread safety guarantees for concurrent access.
 
 ### Public API sketch
+
 ```go
 package canvas
 
@@ -65,8 +68,9 @@ func Draw(c *canvas.Canvas, x, y float64, content string, font *Font)
 ```
 
 ### Package layout
+
 ```
-go-drawille/
+brodot/
   canvas/
     braille.go
     canvas.go
@@ -84,6 +88,7 @@ go-drawille/
 ```
 
 ### Implementation steps
+
 1. Implement braille encoding and decoding helpers.
 2. Implement Canvas with Set, Unset, Toggle, Get, Clear, and Frame.
 3. Add size helpers (Width, Height, Rows, Cols).
@@ -96,12 +101,14 @@ go-drawille/
 10. Add core tests and a small golden output test.
 
 ### Testing scope
+
 - Unit tests for braille mapping and Canvas operations.
 - Line algorithm tests for horizontal, vertical, and diagonal lines.
 - Text rendering tests for a few characters.
 - One golden output test for a maze frame with HUD text.
 
 ### Release criteria
+
 - Public API documented with examples.
 - Tests green on supported Go versions.
 - Zero external dependencies in the core packages.
@@ -109,25 +116,30 @@ go-drawille/
 ## Roadmap for Major Version Releases
 
 ### v2.0: Expanded Drawing and Fills
+
 - Add circles, ellipses, arcs, and Bezier curves.
 - Add polygon drawing and polygon fill.
 - Add flood fill for closed shapes.
 - Add thick line support for bold walls and highlights.
 
 ### v3.0: Turtle and Canvas 2D Context
+
 - Add turtle graphics with standard commands.
 - Add Canvas 2D style path API with transforms and state stack.
 - Define fill rules and stroke options.
 
 ### v4.0: Animation and Plotting
+
 - Add an animation loop and drawable interface.
 - Add basic plotting utilities for lines and scatter plots.
 - Add timing utilities suitable for terminal frame rates.
 
 ### v5.0: Image and 3D Utilities
+
 - Add optional image import and export behind build tags.
 - Evaluate minimal 3D wireframe projection support.
 
 ## Versioning notes
+
 - SemVer with major releases allowed to introduce breaking API changes.
 - Minor releases within a major version add features without breaking the API.
