@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-02-01
+
+### Added
+
+- Rectangle drawing primitives in `draw` package
+- `draw.Rectangle()` function for drawing rectangle outlines
+- `draw.RectangleFilled()` function for drawing filled rectangles
+- Updated demo program with rectangle demonstrations
+
+### Changed
+
+- Refactored visual test helpers to shared file for reuse across test files
+
 ## [0.2.0] - 2026-02-01
 
 ### Added
