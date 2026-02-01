@@ -1,14 +1,15 @@
-// Demo program for brodot v0.1.0
+// Demo program for brodot v0.2.0
 package main
 
 import (
 	"fmt"
 
 	"github.com/cboone/brodot/canvas"
+	"github.com/cboone/brodot/draw"
 )
 
 func main() {
-	fmt.Println("brodot v0.1.0 Demo")
+	fmt.Println("brodot v0.2.0 Demo")
 	fmt.Println("==================")
 	fmt.Println()
 
@@ -80,4 +81,55 @@ func main() {
 	}
 	fmt.Println(c5.Frame())
 	fmt.Println("   (origin at bottom-left)")
+	fmt.Println()
+
+	// Demo 7: Horizontal line using draw.Line
+	fmt.Println("6. Horizontal line (Bresenham):")
+	c6 := canvas.New(20, 4)
+	draw.Line(c6, 1, 1, 18, 1)
+	fmt.Println(c6.Frame())
+	fmt.Println()
+
+	// Demo 8: Vertical line
+	fmt.Println("7. Vertical line:")
+	c7 := canvas.New(4, 16)
+	draw.Line(c7, 1, 1, 1, 14)
+	fmt.Println(c7.Frame())
+	fmt.Println()
+
+	// Demo 9: Diagonal line (45 degrees)
+	fmt.Println("8. Diagonal line (45 degrees):")
+	c8 := canvas.New(16, 16)
+	draw.Line(c8, 0, 0, 15, 15)
+	fmt.Println(c8.Frame())
+	fmt.Println()
+
+	// Demo 10: Shallow slope line
+	fmt.Println("9. Shallow slope line:")
+	c9 := canvas.New(20, 8)
+	draw.Line(c9, 0, 1, 19, 5)
+	fmt.Println(c9.Frame())
+	fmt.Println()
+
+	// Demo 11: Steep slope line
+	fmt.Println("10. Steep slope line:")
+	c10 := canvas.New(8, 20)
+	draw.Line(c10, 1, 0, 5, 19)
+	fmt.Println(c10.Frame())
+	fmt.Println()
+
+	// Demo 12: Star pattern with multiple lines
+	fmt.Println("11. Star pattern (multiple lines):")
+	c11 := canvas.New(20, 20)
+	centerX, centerY := 9.0, 9.0
+	// Draw 8 lines from center to edges
+	draw.Line(c11, centerX, centerY, 9, 0)   // North
+	draw.Line(c11, centerX, centerY, 19, 0)  // Northeast
+	draw.Line(c11, centerX, centerY, 19, 9)  // East
+	draw.Line(c11, centerX, centerY, 19, 19) // Southeast
+	draw.Line(c11, centerX, centerY, 9, 19)  // South
+	draw.Line(c11, centerX, centerY, 0, 19)  // Southwest
+	draw.Line(c11, centerX, centerY, 0, 9)   // West
+	draw.Line(c11, centerX, centerY, 0, 0)   // Northwest
+	fmt.Println(c11.Frame())
 }
