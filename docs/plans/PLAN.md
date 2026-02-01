@@ -294,9 +294,9 @@ Implementation notes:
 - `TestRectanglePartiallyOffCanvas`: rectangle extending beyond bounds is clipped
 
 ### Deliverables
-- [ ] `draw/rectangle.go`
-- [ ] `draw/rectangle_test.go` with `-visual` flag support
-- [ ] Update `examples/demo/main.go` with rectangle demonstrations
+- [x] `draw/rectangle.go`
+- [x] `draw/rectangle_test.go` with `-visual` flag support
+- [x] Update `examples/demo/main.go` with rectangle demonstrations
 
 ### Verification
 ```bash
