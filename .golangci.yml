@@ -8,7 +8,9 @@ run:
 
 formatters:
   enable:
+    - gofmt
     - goimports
+
   settings:
     goimports:
       local-prefixes:
@@ -26,12 +28,15 @@ linters:
     - revive
     # Style
     - godot
+
   settings:
     gocyclo:
       min-complexity: 15
+
     godot:
       capital: false
       scope: declarations
+
     revive:
       rules:
         - name: blank-imports
@@ -51,17 +56,3 @@ linters:
         - name: unexported-return
         - name: var-declaration
         - name: var-naming
-
-issues:
-  exclude-rules:
-    # Relax rules for test files
-    - linters:
-        - errcheck
-        - gocritic
-        - gocyclo
-      path: _test\.go
-    # Relax rules for examples
-    - linters:
-        - errcheck
-        - gocritic
-      path: examples/
