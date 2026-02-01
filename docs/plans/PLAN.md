@@ -604,6 +604,13 @@ All tests pass, including golden tests.
 - Allows sub-pixel precision for smooth rendering
 - Convert to `int` internally for pixel operations
 
+### Public API Contract
+- `float64` coordinates are converted to integer pixel coordinates using `math.Floor`.
+- `New(width, height)` expects pixel units; `Rows()` is `height / 4`, `Cols()` is `width / 2`.
+- Out-of-bounds pixels are silently ignored; partially off-canvas shapes are clipped.
+- Color is per-braille-cell; when multiple pixels in the same cell use different colors, the last write wins.
+- `Frame()` emits ANSI color codes only when color is enabled and resets after each cell.
+
 ### Error Handling
 - Out-of-bounds coordinates are silently ignored
 - No panics, no errors returned
