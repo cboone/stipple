@@ -789,12 +789,31 @@ c := canvas.New(0, 0)  // Creates minimum 2x4 canvas (one cell)
 
 ## 15. Historical Context & Attribution
 
-The technique of using Unicode Braille characters (U+2800-U+28FF) for terminal pixel graphics emerged in early 2014 from multiple sources:
+### Terminal Graphics Evolution
 
-- **[asciimoo/drawille](https://github.com/asciimoo/drawille)** (Python) - Created April 22, 2014. Popularized the technique and spawned 20+ ports.
-- **[JP Verkamp's Racket implementation](https://blog.jverkamp.com/2014/05/30/braille-unicode-pixelation/)** ([source](https://github.com/jpverkamp/small-projects/blob/master/blog/braille-images.rkt)) - Published May 30, 2014. Provided clear explanation of the braille encoding and image conversion with threshold-based approach.
+Terminal graphics have a long history predating braille-based approaches:
 
-Both implementations recognized the key insight: the Braille Unicode block encodes all 256 combinations of an 8-dot pattern in a 2×4 grid, giving 8× pixel density improvement over standard characters.
+- **Sixel Graphics (1980s)** - DEC introduced "six pixel" graphics for dot matrix printers and later VT240/VT340 terminals. Each sixel encodes a 6-pixel-high, 1-pixel-wide column. Still supported by modern terminals like xterm, mlterm, and foot.
+
+- **Block Characters** - Unicode includes various block drawing characters (U+2580-U+259F) offering 2×2 quadrant resolution. The lower half block (U+2584) technique uses foreground/background colors for 2 vertical pixels per cell.
+
+- **Teletext/Videotex (1970s-80s)** - European broadcast systems used 2×3 block graphics (64 patterns) per character cell.
+
+### Braille Graphics Timeline
+
+The technique of using Unicode Braille characters (U+2800-U+28FF) for terminal pixel graphics has earlier origins than commonly cited:
+
+- **[aempirei/Chat-Art](https://github.com/aempirei/Chat-Art)** (C/C++) - Created **February 16, 2013**. Contains `pgmtobraille.c` for converting images to braille. This appears to be the earliest known implementation, predating drawille by over a year.
+
+- **[asciimoo/drawille](https://github.com/asciimoo/drawille)** (Python) - Created **April 22, 2014**. Popularized the technique with a clean Canvas + Turtle API, spawning 20+ ports across languages.
+
+- **[JP Verkamp's Racket implementation](https://blog.jverkamp.com/2014/05/30/braille-unicode-pixelation/)** ([source](https://github.com/jpverkamp/small-projects/blob/master/blog/braille-images.rkt)) - Published **May 30, 2014**. Provided clear explanation of the braille encoding and threshold-based image conversion.
+
+All implementations recognized the key insight: the Braille Unicode block encodes all 256 combinations of an 8-dot pattern in a 2×4 grid, giving 8× pixel density improvement over standard characters.
+
+### Modern Comprehensive Tools
+
+- **[hpjansson/chafa](https://github.com/hpjansson/chafa)** (C) - Created 2018. Comprehensive terminal graphics supporting ASCII, braille, sixel, Kitty protocol, and iTerm2 protocol. The gold standard for image-to-terminal conversion.
 
 ### Historical Note on Braille Dot Ordering
 
@@ -816,17 +835,46 @@ This historical quirk means the bit mapping isn't intuitive, but all implementat
 
 ### Notable Implementations Reviewed:
 
-| Implementation | Language | Notable Features |
-|----------------|----------|------------------|
-| [asciimoo/drawille](https://github.com/asciimoo/drawille) | Python | Popularized technique, Canvas + Turtle |
-| [jpverkamp/braille-images.rkt](https://github.com/jpverkamp/small-projects/blob/master/blog/braille-images.rkt) | Racket | Clear algorithm explanation, threshold-based image conversion |
-| [exrook/drawille-go](https://github.com/exrook/drawille-go) | Go | Basic Go port |
-| [Kerrigan29a/drawille-go](https://github.com/Kerrigan29a/drawille-go) | Go | Bezier, inverse Y, algorithms |
-| [madbence/node-drawille](https://github.com/madbence/node-drawille) | Node.js | Simple API, ecosystem |
-| [madbence/node-drawille-canvas](https://github.com/madbence/node-drawille-canvas) | Node.js | HTML5 Canvas API |
-| [ftxqxd/drawille-rs](https://github.com/ftxqxd/drawille-rs) | Rust | Turtle, colors |
-| [nidhoggfgg/rsille](https://github.com/nidhoggfgg/rsille) | Rust | Animation, 3D, image |
-| [saiftynet/Term-Graille](https://github.com/saiftynet/Term-Graille) | Perl | Thick lines, menus, audio |
-| [sunetos/TextPlots.jl](https://github.com/sunetos/TextPlots.jl) | Julia | Elegant plotting |
-| [null93/drawille](https://github.com/null93/drawille) | Java | Clean OO design |
-| [Huulivoide/libdrawille](https://github.com/Huulivoide/libdrawille) | C | Low-level, benchmarks |
+| Implementation | Language | Year | Notable Features |
+|----------------|----------|------|------------------|
+| [aempirei/Chat-Art](https://github.com/aempirei/Chat-Art) | C/C++ | 2013 | **Earliest known**, pgmtobraille image converter |
+| [asciimoo/drawille](https://github.com/asciimoo/drawille) | Python | 2014 | Popularized technique, Canvas + Turtle |
+| [jpverkamp/braille-images.rkt](https://github.com/jpverkamp/small-projects/blob/master/blog/braille-images.rkt) | Racket | 2014 | Clear algorithm explanation, threshold-based |
+| [exrook/drawille-go](https://github.com/exrook/drawille-go) | Go | 2014 | Basic Go port |
+| [Kerrigan29a/drawille-go](https://github.com/Kerrigan29a/drawille-go) | Go | 2015 | Bezier, inverse Y, Bresenham algorithms |
+| [madbence/node-drawille](https://github.com/madbence/node-drawille) | Node.js | 2014 | Simple API, powers vtop |
+| [madbence/node-drawille-canvas](https://github.com/madbence/node-drawille-canvas) | Node.js | 2014 | HTML5 Canvas 2D API |
+| [ftxqxd/drawille-rs](https://github.com/ftxqxd/drawille-rs) | Rust | 2015 | Turtle, 8 terminal colors |
+| [nidhoggfgg/rsille](https://github.com/nidhoggfgg/rsille) | Rust | 2023 | Animation framework, 3D, image, Game of Life |
+| [asciimoo/lua-drawille](https://github.com/asciimoo/lua-drawille) | Lua | 2014 | 3D support, L-systems, Game of Life, DDL |
+| [saiftynet/Term-Graille](https://github.com/saiftynet/Term-Graille) | Perl | 2021 | Thick lines, menus, audio, sprites |
+| [sunetos/TextPlots.jl](https://github.com/sunetos/TextPlots.jl) | Julia | 2014 | Elegant function/data plotting |
+| [dheera/python-termgraphics](https://github.com/dheera/python-termgraphics) | Python | 2017 | ANSI colors, ASCII fallback, numpy |
+| [null93/drawille](https://github.com/null93/drawille) | Java | 2017 | Clean OO design, Maven build |
+| [Huulivoide/libdrawille](https://github.com/Huulivoide/libdrawille) | C | 2016 | Low-level, benchmarks, CMake |
+| [Nirei/vrawille](https://github.com/Nirei/vrawille) | V | 2020 | V language port, stbi image support |
+| [hpjansson/chafa](https://github.com/hpjansson/chafa) | C | 2018 | Comprehensive: braille, sixel, kitty, iTerm2 |
+
+### Additional Implementations (not reviewed in detail)
+
+| Implementation | Language | Notes |
+|----------------|----------|-------|
+| [hoelzro/term-drawille](https://github.com/hoelzro/term-drawille) | Perl 5 | CPAN: Term::Drawille |
+| [yamadapc/haskell-drawille](https://github.com/yamadapc/haskell-drawille) | Haskell | Functional approach |
+| [mkremins/drawille-clj](https://github.com/mkremins/drawille-clj) | Clojure | Lisp variant |
+| [Goheeca/cl-drawille](https://github.com/Goheeca/cl-drawille) | Common Lisp | Full CL implementation |
+| [PMunch/drawille-nim](https://github.com/PMunch/drawille-nim) | Nim | Systems language port |
+| [mydzor/bash-drawille](https://github.com/mydzor/bash-drawille) | Bash | Pure shell implementation |
+| [whatthejeff/php-drawille](https://github.com/whatthejeff/php-drawille) | PHP | Web server compatible |
+| [liam-middlebrook/drawille-sharp](https://github.com/liam-middlebrook/drawille-sharp) | C# | .NET implementation |
+| [l-a-i-n/drawille-plusplus](https://github.com/l-a-i-n/drawille-plusplus) | C++ | Object-oriented C++ |
+| [massn/elixir-drawille](https://github.com/massn/elixir-drawille) | Elixir | BEAM/Erlang ecosystem |
+
+### Related Tools & Prior Art
+
+| Tool | Description |
+|------|-------------|
+| [Sixel](https://en.wikipedia.org/wiki/Sixel) | DEC's 1980s bitmap graphics for terminals (6 pixels high) |
+| [libsixel](https://saitoha.github.io/libsixel/) | Modern sixel encoder/decoder library |
+| [Kitty Graphics Protocol](https://sw.kovidgoyal.net/kitty/graphics-protocol/) | Modern terminal graphics, true color, animations |
+| [timg](https://github.com/hzeller/timg) | Terminal image/video viewer using various methods |
