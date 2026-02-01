@@ -24,7 +24,7 @@ See [docs/plans/PLAN.md](docs/plans/PLAN.md) for the implementation roadmap.
 ## Installation
 
 ```bash
-go get github.com/brodot/brodot
+go get github.com/cboone/brodot
 ```
 
 ## Quick Start
@@ -35,8 +35,8 @@ package main
 import (
     "fmt"
 
-    "github.com/brodot/brodot/canvas"
-    "github.com/brodot/brodot/draw"
+    "github.com/cboone/brodot/canvas"
+    "github.com/cboone/brodot/draw"
 )
 
 func main() {

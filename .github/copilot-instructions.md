@@ -14,3 +14,5 @@
 
 - **No io/ package exists**: This codebase does not have an `io/` package. Do not suggest renaming it.
 - **Thread safety is a non-goal for v1**: Per ROADMAP.md, thread-safety guarantees are explicitly out of scope for v1.0.
+- **Constructor validation is intentionally minimal**: `New()` does not validate dimensions. Invalid constructor args (negative/zero dimensions) are programmer errors that panic on allocation - this is idiomatic Go. Runtime bounds checking uses silent ignore pattern (see below).
+- **Out-of-bounds coordinates are silently ignored**: Per project conventions, pixel operations on out-of-bounds coordinates return early without error. This enables partial rendering of shapes that extend beyond canvas edges. Do not flag missing bounds validation.
