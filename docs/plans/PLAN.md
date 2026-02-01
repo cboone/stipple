@@ -633,9 +633,9 @@ Unicode Braille patterns (U+2800 to U+28FF) encode a 2x4 dot grid:
 
 ```
 Dot positions:     Bit values:
-  0  1               0x01  0x08
-  2  3               0x02  0x10
-  4  5               0x04  0x20
+  0  3               0x01  0x08
+  1  4               0x02  0x10
+  2  5               0x04  0x20
   6  7               0x40  0x80
 ```
 
