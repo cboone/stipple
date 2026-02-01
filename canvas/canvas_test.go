@@ -285,3 +285,37 @@ func TestFloatCoordinates(t *testing.T) {
 
 	printVisual(t, "TestFloatCoordinates", canvas)
 }
+
+func TestDimensionTruncationBounds(t *testing.T) {
+	// Test that pixels in truncated regions are correctly rejected.
+	// With width=5, height=9:
+	// - Cols() = 5/2 = 2 (valid column indices: 0, 1)
+	// - Rows() = 9/4 = 2 (valid row indices: 0, 1)
+	// - Pixel (4, 8) passes pixel bounds (4 < 5, 8 < 9)
+	// - But cellCol = 4/2 = 2, cellRow = 8/4 = 2 are out of cell bounds
+	canvas := New(5, 9)
+
+	// These should not panic - they're in valid pixel space but invalid cell space
+	canvas.Set(4, 8)
+	canvas.Set(4, 0)
+	canvas.Set(0, 8)
+
+	// Get should return false for pixels that map to truncated cells
+	if canvas.Get(4, 8) {
+		t.Error("Get(4, 8) = true for truncated cell region, want false")
+	}
+	if canvas.Get(4, 0) {
+		t.Error("Get(4, 0) = true for truncated cell region, want false")
+	}
+	if canvas.Get(0, 8) {
+		t.Error("Get(0, 8) = true for truncated cell region, want false")
+	}
+
+	// But valid pixels should still work
+	canvas.Set(3, 7)
+	if !canvas.Get(3, 7) {
+		t.Error("Get(3, 7) = false for valid pixel, want true")
+	}
+
+	printVisual(t, "TestDimensionTruncationBounds", canvas)
+}

@@ -126,7 +126,7 @@ func (canvas *Canvas) pixelToCell(x, y float64) (cellRow, cellColumn, dotRow, do
 		pixelY = canvas.height - 1 - pixelY
 	}
 
-	// Check bounds
+	// Check bounds against pixel dimensions
 	if pixelX < 0 || pixelX >= canvas.width || pixelY < 0 || pixelY >= canvas.height {
 		return 0, 0, 0, 0, false
 	}
@@ -134,6 +134,11 @@ func (canvas *Canvas) pixelToCell(x, y float64) (cellRow, cellColumn, dotRow, do
 	// Calculate cell position
 	cellColumn = pixelX / 2
 	cellRow = pixelY / 4
+
+	// Check bounds against cell dimensions (handles dimension truncation)
+	if cellRow >= canvas.Rows() || cellColumn >= canvas.Cols() {
+		return 0, 0, 0, 0, false
+	}
 
 	// Calculate dot position within cell
 	dotColumn = pixelX % 2
