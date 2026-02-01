@@ -216,7 +216,7 @@ func TestDimensions(t *testing.T) {
 		{4, 8, 2, 2},
 		{10, 20, 5, 5},
 		{80, 40, 10, 40},
-		{5, 9, 2, 2},   // Tests truncation: 9/4 = 2, 5/2 = 2
+		{5, 9, 2, 2}, // Tests truncation: 9/4 = 2, 5/2 = 2
 		{100, 100, 25, 50},
 	}
 
@@ -246,10 +246,10 @@ func TestFrameMultipleRows(t *testing.T) {
 	canvas := New(4, 16) // 2 cols x 4 rows
 
 	// Set one pixel in each row
-	canvas.Set(0, 0)   // row 0
-	canvas.Set(0, 4)   // row 1
-	canvas.Set(0, 8)   // row 2
-	canvas.Set(0, 12)  // row 3
+	canvas.Set(0, 0)  // row 0
+	canvas.Set(0, 4)  // row 1
+	canvas.Set(0, 8)  // row 2
+	canvas.Set(0, 12) // row 3
 
 	frame := canvas.Frame()
 
@@ -273,12 +273,12 @@ func TestFloatCoordinates(t *testing.T) {
 	canvas := New(4, 8)
 
 	// Test that fractional coordinates floor correctly
-	canvas.Set(0.9, 0.9)  // Should map to (0, 0)
+	canvas.Set(0.9, 0.9) // Should map to (0, 0)
 	if !canvas.Get(0, 0) {
 		t.Error("Set(0.9, 0.9) should set pixel (0, 0)")
 	}
 
-	canvas.Set(1.5, 2.7)  // Should map to (1, 2)
+	canvas.Set(1.5, 2.7) // Should map to (1, 2)
 	if !canvas.Get(1, 2) {
 		t.Error("Set(1.5, 2.7) should set pixel (1, 2)")
 	}
