@@ -24,6 +24,11 @@ coverage:
 	go tool cover -html=coverage.out -o coverage.html
 	@echo "Coverage report: coverage.html"
 
+# Run demo program
+.PHONY: demo
+demo:
+	go run ./examples/demo/
+
 # Format code
 .PHONY: fmt
 fmt:
@@ -37,6 +42,7 @@ help:
 	@echo "  build        Build all packages"
 	@echo "  clean        Remove build artifacts"
 	@echo "  coverage     Generate HTML coverage report"
+	@echo "  demo         Run demo program"
 	@echo "  fmt          Format code"
 	@echo "  help         Show this help message"
 	@echo "  lint         Run golangci-lint"
