@@ -8,12 +8,12 @@ import (
 // Canvas represents a braille graphics canvas.
 // Each terminal cell displays a 2x4 braille pattern, providing pixel-level control.
 type Canvas struct {
-	cells        [][]rune   // braille character grid [row][col]
-	colorEnabled bool       // whether color support is enabled
-	colors       [][]Color  // color grid [row][col], nil when colors disabled
-	height       int        // pixel height
-	invertY      bool       // Y-axis direction: false = down, true = up
-	width        int        // pixel width
+	cells        [][]rune  // braille character grid [row][col]
+	colorEnabled bool      // whether color support is enabled
+	colors       [][]Color // color grid [row][col], nil when colors disabled
+	height       int       // pixel height
+	invertY      bool      // Y-axis direction: false = down, true = up
+	width        int       // pixel width
 }
 
 // New creates a new Canvas with the specified pixel dimensions.
