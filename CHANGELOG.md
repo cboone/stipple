@@ -7,6 +7,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.5.0] - 2026-02-01
+
+### Added
+
+- Optional per-cell ANSI color support in `canvas` package
+- `canvas.Color` type with 8 basic ANSI colors (Black, Red, Green, Yellow, Blue, Magenta, Cyan, White)
+- `canvas.SetColor()` method for setting pixels with color
+- `WithColor()` option to enable color grid allocation
+- `Color.ANSI()` method for escape sequence generation
+- `ANSIReset()` function for reset escape sequence
+- Color tests with visual flag support
+- Updated demo program with color demonstrations (demos 21-24)
+
+## [0.4.0] - 2026-02-01
+
+### Added
+
+- Circle drawing primitives in `draw` package
+- `draw.Circle()` function for drawing circle outlines using Bresenham's midpoint algorithm
+- `draw.CircleFilled()` function for drawing filled circles
+- 8-way symmetry optimization for efficient circle rendering
+- Updated demo program with circle demonstrations
+
 ## [0.3.0] - 2026-02-01
 
 ### Added

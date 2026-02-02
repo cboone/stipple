@@ -1,43 +1,71 @@
-// Demo program for brodot v0.4.0
+// Demo program for brodot v0.5.0
 package main
 
 import (
 	"fmt"
+	"math"
 
 	"github.com/cboone/brodot/canvas"
 	"github.com/cboone/brodot/draw"
 )
 
 func main() {
-	fmt.Println("brodot v0.4.0 Demo")
+	fmt.Println("brodot v0.5.0 Demo")
 	fmt.Println("==================")
 	fmt.Println()
 
 	// Show canvas dimensions
-	c := canvas.New(40, 20)
+	canvasDemo := canvas.New(40, 20)
 	fmt.Printf("Canvas: %dx%d pixels (%d cols x %d rows)\n",
-		c.Width(), c.Height(), c.Cols(), c.Rows())
+		canvasDemo.Width(), canvasDemo.Height(), canvasDemo.Cols(), canvasDemo.Rows())
 	fmt.Println()
 
-	// Demo 1: Individual pixels
+	demoIndividualPixels()
+	demoAllDotsInCell()
+	demoDiagonalPattern()
+	demoBoxOutline()
+	demoInvertedY()
+	demoHorizontalLine()
+	demoVerticalLine()
+	demoDiagonalLine()
+	demoShallowSlopeLine()
+	demoSteepSlopeLine()
+	demoStarPattern()
+	demoRectangleOutline()
+	demoFilledRectangle()
+	demoNestedRectangles()
+	demoWallRectangles()
+	demoCircleOutline()
+	demoFilledCircle()
+	demoMultipleCircleSizes()
+	demoConcentricCircles()
+	demoEyeballSprite()
+	demoColorBars()
+	demoColoredLines()
+	demoColoredRectangles()
+	demoColoredEyeball()
+}
+
+func demoIndividualPixels() {
 	fmt.Println("1. Individual pixels:")
-	c1 := canvas.New(4, 8)
-	c1.Set(0, 0) // Top-left dot
-	c1.Set(3, 0) // Top-right dot
-	c1.Set(0, 7) // Bottom-left dot
-	c1.Set(3, 7) // Bottom-right dot
-	fmt.Println(c1.Frame())
+	canvasDemo := canvas.New(4, 8)
+	canvasDemo.Set(0, 0) // Top-left dot
+	canvasDemo.Set(3, 0) // Top-right dot
+	canvasDemo.Set(0, 7) // Bottom-left dot
+	canvasDemo.Set(3, 7) // Bottom-right dot
+	fmt.Println(canvasDemo.Frame())
 	fmt.Println()
+}
 
-	// Demo 2: All 8 dots in a cell
+func demoAllDotsInCell() {
 	fmt.Println("2. All 8 dots in a cell:")
-	c2 := canvas.New(2, 4)
+	canvasDemo := canvas.New(2, 4)
 	for y := 0; y < 4; y++ {
 		for x := 0; x < 2; x++ {
-			c2.Set(float64(x), float64(y))
+			canvasDemo.Set(float64(x), float64(y))
 		}
 	}
-	fmt.Println(c2.Frame())
+	fmt.Println(canvasDemo.Frame())
 	fmt.Println()
 	fmt.Println("   Dot positions:    Bit values:")
 	fmt.Println("     0  3              0x01  0x08")
@@ -45,166 +73,292 @@ func main() {
 	fmt.Println("     2  5              0x04  0x20")
 	fmt.Println("     6  7              0x40  0x80")
 	fmt.Println()
+}
 
-	// Demo 3: Diagonal pattern
+func demoDiagonalPattern() {
 	fmt.Println("3. Diagonal pattern:")
-	c3 := canvas.New(20, 20)
+	canvasDemo := canvas.New(20, 20)
 	for index := 0; index < 20; index++ {
-		c3.Set(float64(index), float64(index))
+		canvasDemo.Set(float64(index), float64(index))
 	}
-	fmt.Println(c3.Frame())
+	fmt.Println(canvasDemo.Frame())
 	fmt.Println()
+}
 
-	// Demo 4: Box pattern
+func demoBoxOutline() {
 	fmt.Println("4. Box outline:")
-	c4 := canvas.New(16, 12)
+	canvasDemo := canvas.New(16, 12)
 	// Top and bottom edges
 	for x := 0; x < 16; x++ {
-		c4.Set(float64(x), 0)
-		c4.Set(float64(x), 11)
+		canvasDemo.Set(float64(x), 0)
+		canvasDemo.Set(float64(x), 11)
 	}
 	// Left and right edges
 	for y := 0; y < 12; y++ {
-		c4.Set(0, float64(y))
-		c4.Set(15, float64(y))
+		canvasDemo.Set(0, float64(y))
+		canvasDemo.Set(15, float64(y))
 	}
-	fmt.Println(c4.Frame())
+	fmt.Println(canvasDemo.Frame())
 	fmt.Println()
+}
 
-	// Demo 5: Inverted Y-axis
+func demoInvertedY() {
 	fmt.Println("5. Inverted Y-axis (mathematical coordinates):")
-	c5 := canvas.New(8, 8, canvas.WithInvertedY())
+	canvasDemo := canvas.New(8, 8, canvas.WithInvertedY())
 	// Draw a simple "rising" line from (0,0) to (7,7)
 	// With inverted Y, this goes from bottom-left to top-right
 	for index := 0; index < 8; index++ {
-		c5.Set(float64(index), float64(index))
+		canvasDemo.Set(float64(index), float64(index))
 	}
-	fmt.Println(c5.Frame())
+	fmt.Println(canvasDemo.Frame())
 	fmt.Println("   (origin at bottom-left)")
 	fmt.Println()
+}
 
-	// Demo 6: Horizontal line using draw.Line
+func demoHorizontalLine() {
 	fmt.Println("6. Horizontal line (Bresenham):")
-	c6 := canvas.New(20, 4)
-	draw.Line(c6, 1, 1, 18, 1)
-	fmt.Println(c6.Frame())
+	canvasDemo := canvas.New(20, 4)
+	draw.Line(canvasDemo, 1, 1, 18, 1)
+	fmt.Println(canvasDemo.Frame())
 	fmt.Println()
+}
 
-	// Demo 7: Vertical line
+func demoVerticalLine() {
 	fmt.Println("7. Vertical line:")
-	c7 := canvas.New(4, 16)
-	draw.Line(c7, 1, 1, 1, 14)
-	fmt.Println(c7.Frame())
+	canvasDemo := canvas.New(4, 16)
+	draw.Line(canvasDemo, 1, 1, 1, 14)
+	fmt.Println(canvasDemo.Frame())
 	fmt.Println()
+}
 
-	// Demo 8: Diagonal line (45 degrees)
+func demoDiagonalLine() {
 	fmt.Println("8. Diagonal line (45 degrees):")
-	c8 := canvas.New(16, 16)
-	draw.Line(c8, 0, 0, 15, 15)
-	fmt.Println(c8.Frame())
+	canvasDemo := canvas.New(16, 16)
+	draw.Line(canvasDemo, 0, 0, 15, 15)
+	fmt.Println(canvasDemo.Frame())
 	fmt.Println()
+}
 
-	// Demo 9: Shallow slope line
+func demoShallowSlopeLine() {
 	fmt.Println("9. Shallow slope line:")
-	c9 := canvas.New(20, 8)
-	draw.Line(c9, 0, 1, 19, 5)
-	fmt.Println(c9.Frame())
+	canvasDemo := canvas.New(20, 8)
+	draw.Line(canvasDemo, 0, 1, 19, 5)
+	fmt.Println(canvasDemo.Frame())
 	fmt.Println()
+}
 
-	// Demo 10: Steep slope line
+func demoSteepSlopeLine() {
 	fmt.Println("10. Steep slope line:")
-	c10 := canvas.New(8, 20)
-	draw.Line(c10, 1, 0, 5, 19)
-	fmt.Println(c10.Frame())
+	canvasDemo := canvas.New(8, 20)
+	draw.Line(canvasDemo, 1, 0, 5, 19)
+	fmt.Println(canvasDemo.Frame())
 	fmt.Println()
+}
 
-	// Demo 11: Star pattern with multiple lines
+func demoStarPattern() {
 	fmt.Println("11. Star pattern (multiple lines):")
-	c11 := canvas.New(20, 20)
+	canvasDemo := canvas.New(20, 20)
 	centerX, centerY := 9.0, 9.0
 	// Draw 8 lines from center to edges
-	draw.Line(c11, centerX, centerY, 9, 0)   // North
-	draw.Line(c11, centerX, centerY, 19, 0)  // Northeast
-	draw.Line(c11, centerX, centerY, 19, 9)  // East
-	draw.Line(c11, centerX, centerY, 19, 19) // Southeast
-	draw.Line(c11, centerX, centerY, 9, 19)  // South
-	draw.Line(c11, centerX, centerY, 0, 19)  // Southwest
-	draw.Line(c11, centerX, centerY, 0, 9)   // West
-	draw.Line(c11, centerX, centerY, 0, 0)   // Northwest
-	fmt.Println(c11.Frame())
+	draw.Line(canvasDemo, centerX, centerY, 9, 0)   // North
+	draw.Line(canvasDemo, centerX, centerY, 19, 0)  // Northeast
+	draw.Line(canvasDemo, centerX, centerY, 19, 9)  // East
+	draw.Line(canvasDemo, centerX, centerY, 19, 19) // Southeast
+	draw.Line(canvasDemo, centerX, centerY, 9, 19)  // South
+	draw.Line(canvasDemo, centerX, centerY, 0, 19)  // Southwest
+	draw.Line(canvasDemo, centerX, centerY, 0, 9)   // West
+	draw.Line(canvasDemo, centerX, centerY, 0, 0)   // Northwest
+	fmt.Println(canvasDemo.Frame())
 	fmt.Println()
+}
 
-	// Demo 12: Rectangle outline
+func demoRectangleOutline() {
 	fmt.Println("12. Rectangle outline:")
-	c12 := canvas.New(40, 20)
-	draw.Rectangle(c12, 5, 2, 30, 16)
-	fmt.Println(c12.Frame())
+	canvasDemo := canvas.New(40, 20)
+	draw.Rectangle(canvasDemo, 5, 2, 30, 16)
+	fmt.Println(canvasDemo.Frame())
 	fmt.Println()
+}
 
-	// Demo 13: Filled rectangle
+func demoFilledRectangle() {
 	fmt.Println("13. Filled rectangle:")
-	c13 := canvas.New(40, 20)
-	draw.RectangleFilled(c13, 5, 2, 30, 16)
-	fmt.Println(c13.Frame())
+	canvasDemo := canvas.New(40, 20)
+	draw.RectangleFilled(canvasDemo, 5, 2, 30, 16)
+	fmt.Println(canvasDemo.Frame())
 	fmt.Println()
+}
 
-	// Demo 14: Multiple rectangles (nested)
+func demoNestedRectangles() {
 	fmt.Println("14. Nested rectangles:")
-	c14 := canvas.New(40, 24)
-	draw.Rectangle(c14, 2, 2, 36, 20)
-	draw.Rectangle(c14, 6, 4, 28, 16)
-	draw.Rectangle(c14, 10, 6, 20, 12)
-	draw.Rectangle(c14, 14, 8, 12, 8)
-	fmt.Println(c14.Frame())
+	canvasDemo := canvas.New(40, 24)
+	draw.Rectangle(canvasDemo, 2, 2, 36, 20)
+	draw.Rectangle(canvasDemo, 6, 4, 28, 16)
+	draw.Rectangle(canvasDemo, 10, 6, 20, 12)
+	draw.Rectangle(canvasDemo, 14, 8, 12, 8)
+	fmt.Println(canvasDemo.Frame())
 	fmt.Println()
+}
 
-	// Demo 15: Wall-like rectangles (Maze Wars preview)
+func demoWallRectangles() {
 	fmt.Println("15. Wall-like rectangles (Maze Wars preview):")
-	c15 := canvas.New(60, 32)
+	canvasDemo := canvas.New(60, 32)
 	// Far wall (small, centered)
-	draw.RectangleFilled(c15, 20, 8, 20, 16)
+	draw.RectangleFilled(canvasDemo, 20, 8, 20, 16)
 	// Side walls (trapezoid approximation with rectangles)
-	draw.Rectangle(c15, 5, 2, 50, 28)
-	fmt.Println(c15.Frame())
+	draw.Rectangle(canvasDemo, 5, 2, 50, 28)
+	fmt.Println(canvasDemo.Frame())
 	fmt.Println()
+}
 
-	// Demo 16: Circle outline
+func demoCircleOutline() {
 	fmt.Println("16. Circle outline:")
-	c16 := canvas.New(30, 28)
-	draw.Circle(c16, 14, 13, 10)
-	fmt.Println(c16.Frame())
+	canvasDemo := canvas.New(30, 28)
+	draw.Circle(canvasDemo, 14, 13, 10)
+	fmt.Println(canvasDemo.Frame())
 	fmt.Println()
+}
 
-	// Demo 17: Filled circle
+func demoFilledCircle() {
 	fmt.Println("17. Filled circle:")
-	c17 := canvas.New(30, 28)
-	draw.CircleFilled(c17, 14, 13, 10)
-	fmt.Println(c17.Frame())
+	canvasDemo := canvas.New(30, 28)
+	draw.CircleFilled(canvasDemo, 14, 13, 10)
+	fmt.Println(canvasDemo.Frame())
 	fmt.Println()
+}
 
-	// Demo 18: Multiple circle sizes
+func demoMultipleCircleSizes() {
 	fmt.Println("18. Multiple circle sizes:")
-	c18 := canvas.New(60, 28)
-	draw.Circle(c18, 8, 13, 5)
-	draw.Circle(c18, 25, 13, 8)
-	draw.Circle(c18, 47, 13, 10)
-	fmt.Println(c18.Frame())
+	canvasDemo := canvas.New(60, 28)
+	draw.Circle(canvasDemo, 8, 13, 5)
+	draw.Circle(canvasDemo, 25, 13, 8)
+	draw.Circle(canvasDemo, 47, 13, 10)
+	fmt.Println(canvasDemo.Frame())
 	fmt.Println()
+}
 
-	// Demo 19: Concentric circles
+func demoConcentricCircles() {
 	fmt.Println("19. Concentric circles:")
-	c19 := canvas.New(40, 36)
+	canvasDemo := canvas.New(40, 36)
 	for radius := 2; radius <= 14; radius += 3 {
-		draw.Circle(c19, 19, 17, float64(radius))
+		draw.Circle(canvasDemo, 19, 17, float64(radius))
 	}
-	fmt.Println(c19.Frame())
+	fmt.Println(canvasDemo.Frame())
 	fmt.Println()
+}
 
-	// Demo 20: Eyeball sprite (Maze Wars preview)
+func demoEyeballSprite() {
 	fmt.Println("20. Eyeball sprite (Maze Wars preview):")
-	c20 := canvas.New(30, 28)
-	draw.CircleFilled(c20, 14, 13, 10) // outer eye
-	draw.Circle(c20, 16, 12, 5)        // iris
-	draw.CircleFilled(c20, 17, 11, 2)  // pupil
-	fmt.Println(c20.Frame())
+	canvasDemo := canvas.New(30, 28)
+	draw.CircleFilled(canvasDemo, 14, 13, 10) // outer eye
+	draw.Circle(canvasDemo, 16, 12, 5)        // iris
+	draw.CircleFilled(canvasDemo, 17, 11, 2)  // pupil
+	fmt.Println(canvasDemo.Frame())
+	fmt.Println()
+}
+
+func demoColorBars() {
+	fmt.Println("21. Color basics (vertical bars):")
+	canvasDemo := canvas.New(32, 8, canvas.WithColor())
+	colors := []canvas.Color{
+		canvas.ColorBlack,
+		canvas.ColorBlue,
+		canvas.ColorCyan,
+		canvas.ColorGreen,
+		canvas.ColorMagenta,
+		canvas.ColorRed,
+		canvas.ColorWhite,
+		canvas.ColorYellow,
+	}
+	for index, color := range colors {
+		startX := index * 4
+		for x := startX; x < startX+4; x++ {
+			for y := 0; y < 8; y++ {
+				canvasDemo.SetColor(float64(x), float64(y), color)
+			}
+		}
+	}
+	fmt.Println(canvasDemo.Frame())
+	fmt.Println()
+}
+
+func demoColoredLines() {
+	fmt.Println("22. Colored lines:")
+	canvasDemo := canvas.New(20, 16, canvas.WithColor())
+	// Red horizontal line
+	for x := 0; x < 20; x++ {
+		canvasDemo.SetColor(float64(x), 2, canvas.ColorRed)
+	}
+	// Green diagonal line
+	for index := 0; index < 16; index++ {
+		x := float64(index * 20 / 16)
+		canvasDemo.SetColor(x, float64(index), canvas.ColorGreen)
+	}
+	// Blue vertical line
+	for y := 0; y < 16; y++ {
+		canvasDemo.SetColor(18, float64(y), canvas.ColorBlue)
+	}
+	fmt.Println(canvasDemo.Frame())
+	fmt.Println()
+}
+
+func demoColoredRectangles() {
+	fmt.Println("23. Colored rectangles:")
+	canvasDemo := canvas.New(40, 20, canvas.WithColor())
+	// Cyan outer rectangle
+	for x := 2; x < 38; x++ {
+		canvasDemo.SetColor(float64(x), 1, canvas.ColorCyan)
+		canvasDemo.SetColor(float64(x), 18, canvas.ColorCyan)
+	}
+	for y := 1; y < 19; y++ {
+		canvasDemo.SetColor(2, float64(y), canvas.ColorCyan)
+		canvasDemo.SetColor(37, float64(y), canvas.ColorCyan)
+	}
+	// Yellow inner rectangle
+	for x := 10; x < 30; x++ {
+		canvasDemo.SetColor(float64(x), 6, canvas.ColorYellow)
+		canvasDemo.SetColor(float64(x), 13, canvas.ColorYellow)
+	}
+	for y := 6; y < 14; y++ {
+		canvasDemo.SetColor(10, float64(y), canvas.ColorYellow)
+		canvasDemo.SetColor(29, float64(y), canvas.ColorYellow)
+	}
+	fmt.Println(canvasDemo.Frame())
+	fmt.Println()
+}
+
+func demoColoredEyeball() {
+	fmt.Println("24. Colored eyeball:")
+	canvasDemo := canvas.New(30, 28, canvas.WithColor())
+	centerX, centerY := 14.0, 13.0
+	// White eye (filled circle)
+	for y := 0; y < 28; y++ {
+		for x := 0; x < 30; x++ {
+			distanceX := float64(x) - centerX
+			distanceY := float64(y) - centerY
+			distance := math.Sqrt(distanceX*distanceX + distanceY*distanceY)
+			if distance <= 10 {
+				canvasDemo.SetColor(float64(x), float64(y), canvas.ColorWhite)
+			}
+		}
+	}
+	// Blue iris (circle outline)
+	irisRadius := 5.0
+	for angle := 0.0; angle < 2*math.Pi; angle += 0.05 {
+		x := centerX + 2 + irisRadius*math.Cos(angle)
+		y := centerY - 1 + irisRadius*math.Sin(angle)
+		canvasDemo.SetColor(x, y, canvas.ColorBlue)
+	}
+	// Black pupil (filled circle)
+	pupilCenterX, pupilCenterY := centerX+3, centerY-2
+	for y := 0; y < 28; y++ {
+		for x := 0; x < 30; x++ {
+			distanceX := float64(x) - pupilCenterX
+			distanceY := float64(y) - pupilCenterY
+			distance := math.Sqrt(distanceX*distanceX + distanceY*distanceY)
+			if distance <= 2 {
+				canvasDemo.SetColor(float64(x), float64(y), canvas.ColorBlack)
+			}
+		}
+	}
+	fmt.Println(canvasDemo.Frame())
 }
