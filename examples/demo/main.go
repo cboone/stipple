@@ -1,15 +1,16 @@
-// Demo program for brodot v0.4.0
+// Demo program for brodot v0.5.0
 package main
 
 import (
 	"fmt"
+	"math"
 
 	"github.com/cboone/brodot/canvas"
 	"github.com/cboone/brodot/draw"
 )
 
 func main() {
-	fmt.Println("brodot v0.4.0 Demo")
+	fmt.Println("brodot v0.5.0 Demo")
 	fmt.Println("==================")
 	fmt.Println()
 
@@ -207,4 +208,108 @@ func main() {
 	draw.Circle(c20, 16, 12, 5)        // iris
 	draw.CircleFilled(c20, 17, 11, 2)  // pupil
 	fmt.Println(c20.Frame())
+	fmt.Println()
+
+	// Demo 21: Color basics - Vertical bars of each color
+	fmt.Println("21. Color basics (vertical bars):")
+	c21 := canvas.New(32, 8, canvas.WithColor())
+	colors := []canvas.Color{
+		canvas.ColorBlack,
+		canvas.ColorBlue,
+		canvas.ColorCyan,
+		canvas.ColorGreen,
+		canvas.ColorMagenta,
+		canvas.ColorRed,
+		canvas.ColorWhite,
+		canvas.ColorYellow,
+	}
+	for index, color := range colors {
+		startX := index * 4
+		for x := startX; x < startX+4; x++ {
+			for y := 0; y < 8; y++ {
+				c21.SetColor(float64(x), float64(y), color)
+			}
+		}
+	}
+	fmt.Println(c21.Frame())
+	fmt.Println()
+
+	// Demo 22: Colored lines - Red horizontal, green diagonal, blue vertical
+	fmt.Println("22. Colored lines:")
+	c22 := canvas.New(20, 16, canvas.WithColor())
+	// Red horizontal line
+	for x := 0; x < 20; x++ {
+		c22.SetColor(float64(x), 2, canvas.ColorRed)
+	}
+	// Green diagonal line
+	for index := 0; index < 16; index++ {
+		x := float64(index * 20 / 16)
+		c22.SetColor(x, float64(index), canvas.ColorGreen)
+	}
+	// Blue vertical line
+	for y := 0; y < 16; y++ {
+		c22.SetColor(18, float64(y), canvas.ColorBlue)
+	}
+	fmt.Println(c22.Frame())
+	fmt.Println()
+
+	// Demo 23: Colored rectangles - Cyan outer, yellow inner nested rectangles
+	fmt.Println("23. Colored rectangles:")
+	c23 := canvas.New(40, 20, canvas.WithColor())
+	// Cyan outer rectangle
+	for x := 2; x < 38; x++ {
+		c23.SetColor(float64(x), 1, canvas.ColorCyan)
+		c23.SetColor(float64(x), 18, canvas.ColorCyan)
+	}
+	for y := 1; y < 19; y++ {
+		c23.SetColor(2, float64(y), canvas.ColorCyan)
+		c23.SetColor(37, float64(y), canvas.ColorCyan)
+	}
+	// Yellow inner rectangle
+	for x := 10; x < 30; x++ {
+		c23.SetColor(float64(x), 6, canvas.ColorYellow)
+		c23.SetColor(float64(x), 13, canvas.ColorYellow)
+	}
+	for y := 6; y < 14; y++ {
+		c23.SetColor(10, float64(y), canvas.ColorYellow)
+		c23.SetColor(29, float64(y), canvas.ColorYellow)
+	}
+	fmt.Println(c23.Frame())
+	fmt.Println()
+
+	// Demo 24: Colored eyeball - White eye, blue iris, black pupil
+	fmt.Println("24. Colored eyeball:")
+	c24 := canvas.New(30, 28, canvas.WithColor())
+	centerX24, centerY24 := 14.0, 13.0
+	// White eye (filled circle)
+	for y := 0; y < 28; y++ {
+		for x := 0; x < 30; x++ {
+			distanceX := float64(x) - centerX24
+			distanceY := float64(y) - centerY24
+			distance := math.Sqrt(distanceX*distanceX + distanceY*distanceY)
+			if distance <= 10 {
+				c24.SetColor(float64(x), float64(y), canvas.ColorWhite)
+			}
+		}
+	}
+	// Blue iris (circle outline)
+	irisRadius := 5.0
+	for angle := 0.0; angle < 2*math.Pi; angle += 0.05 {
+		x := centerX24 + 2 + irisRadius*math.Cos(angle)
+		y := centerY24 - 1 + irisRadius*math.Sin(angle)
+		c24.SetColor(x, y, canvas.ColorBlue)
+	}
+	// Black pupil (filled circle)
+	pupilCenterX, pupilCenterY := centerX24+3, centerY24-2
+	for y := 0; y < 28; y++ {
+		for x := 0; x < 30; x++ {
+			distanceX := float64(x) - pupilCenterX
+			distanceY := float64(y) - pupilCenterY
+			distance := math.Sqrt(distanceX*distanceX + distanceY*distanceY)
+			if distance <= 2 {
+				c24.SetColor(float64(x), float64(y), canvas.ColorBlack)
+			}
+		}
+	}
+	fmt.Println(c24.Frame())
 }
