@@ -53,6 +53,7 @@ func TestCircleSymmetry(t *testing.T) {
 		}
 	}
 
+	assertGolden(t, "circle_outline", c)
 	printVisual(t, "TestCircleSymmetry", c)
 }
 
@@ -70,6 +71,7 @@ func TestCircleRadius0(t *testing.T) {
 		t.Errorf("expected 1 pixel for radius 0, got %d", count)
 	}
 
+	assertGolden(t, "circle_radius_0", c)
 	printVisual(t, "TestCircleRadius0", c)
 }
 
@@ -97,6 +99,7 @@ func TestCircleRadius1(t *testing.T) {
 		t.Errorf("radius 1 circle: expected 4 pixels, got %d", count)
 	}
 
+	assertGolden(t, "circle_radius_1", c)
 	printVisual(t, "TestCircleRadius1", c)
 }
 
@@ -218,6 +221,7 @@ func TestCircleFilled(t *testing.T) {
 		t.Error("interior point (10, 14) not set")
 	}
 
+	assertGolden(t, "circle_filled", c)
 	printVisual(t, "TestCircleFilled", c)
 }
 
