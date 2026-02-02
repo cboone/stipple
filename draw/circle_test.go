@@ -27,9 +27,9 @@ func TestCircleSymmetry(t *testing.T) {
 	symmetryPoints := []struct {
 		deltaX, deltaY int
 	}{
-		{10, 0},  // East point
-		{0, 10},  // South point
-		{7, 7},   // Diagonal (approximate for radius 10)
+		{10, 0}, // East point
+		{0, 10}, // South point
+		{7, 7},  // Diagonal (approximate for radius 10)
 	}
 
 	for _, point := range symmetryPoints {
