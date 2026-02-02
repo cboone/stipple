@@ -1,4 +1,4 @@
-// Demo program for brodot v0.3.0
+// Demo program for brodot v0.4.0
 package main
 
 import (
@@ -9,7 +9,7 @@ import (
 )
 
 func main() {
-	fmt.Println("brodot v0.3.0 Demo")
+	fmt.Println("brodot v0.4.0 Demo")
 	fmt.Println("==================")
 	fmt.Println()
 
@@ -166,4 +166,45 @@ func main() {
 	// Side walls (trapezoid approximation with rectangles)
 	draw.Rectangle(c15, 5, 2, 50, 28)
 	fmt.Println(c15.Frame())
+	fmt.Println()
+
+	// Demo 16: Circle outline
+	fmt.Println("16. Circle outline:")
+	c16 := canvas.New(30, 28)
+	draw.Circle(c16, 14, 13, 10)
+	fmt.Println(c16.Frame())
+	fmt.Println()
+
+	// Demo 17: Filled circle
+	fmt.Println("17. Filled circle:")
+	c17 := canvas.New(30, 28)
+	draw.CircleFilled(c17, 14, 13, 10)
+	fmt.Println(c17.Frame())
+	fmt.Println()
+
+	// Demo 18: Multiple circle sizes
+	fmt.Println("18. Multiple circle sizes:")
+	c18 := canvas.New(60, 28)
+	draw.Circle(c18, 8, 13, 5)
+	draw.Circle(c18, 25, 13, 8)
+	draw.Circle(c18, 47, 13, 10)
+	fmt.Println(c18.Frame())
+	fmt.Println()
+
+	// Demo 19: Concentric circles
+	fmt.Println("19. Concentric circles:")
+	c19 := canvas.New(40, 36)
+	for radius := 2; radius <= 14; radius += 3 {
+		draw.Circle(c19, 19, 17, float64(radius))
+	}
+	fmt.Println(c19.Frame())
+	fmt.Println()
+
+	// Demo 20: Eyeball sprite (Maze Wars preview)
+	fmt.Println("20. Eyeball sprite (Maze Wars preview):")
+	c20 := canvas.New(30, 28)
+	draw.CircleFilled(c20, 14, 13, 10) // outer eye
+	draw.Circle(c20, 16, 12, 5)        // iris
+	draw.CircleFilled(c20, 17, 11, 2)  // pupil
+	fmt.Println(c20.Frame())
 }
