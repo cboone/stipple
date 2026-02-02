@@ -434,11 +434,11 @@ func WithColor() Option {
 - `TestColorReset`: verify colors reset between cells
 
 ### Deliverables
-- [ ] `canvas/color.go`
-- [ ] Updated `canvas/canvas.go` with color support
-- [ ] Updated `canvas/options.go` with `WithColor()`
-- [ ] `canvas/color_test.go` with `-visual` flag support
-- [ ] Update `examples/demo/main.go` with color demonstrations
+- [x] `canvas/color.go`
+- [x] Updated `canvas/canvas.go` with color support
+- [x] Updated `canvas/options.go` with `WithColor()`
+- [x] `canvas/color_test.go` with `-visual` flag support
+- [x] Update `examples/demo/main.go` with color demonstrations
 
 ### Verification
 ```bash
