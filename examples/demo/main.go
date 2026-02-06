@@ -1,16 +1,16 @@
-// Demo program for brodot v0.5.0
+// Demo program for stipple v0.5.0
 package main
 
 import (
 	"fmt"
 	"math"
 
-	"github.com/cboone/brodot/canvas"
-	"github.com/cboone/brodot/draw"
+	"github.com/cboone/stipple/canvas"
+	"github.com/cboone/stipple/draw"
 )
 
 func main() {
-	fmt.Println("brodot v0.5.0 Demo")
+	fmt.Println("stipple v0.5.0 Demo")
 	fmt.Println("==================")
 	fmt.Println()
 

@@ -6,7 +6,7 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/cboone/brodot/canvas"
+	"github.com/cboone/stipple/canvas"
 )
 
 var visualFlag = flag.Bool("visual", false, "print visual output")

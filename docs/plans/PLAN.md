@@ -1,4 +1,4 @@
-# brodot v1 Implementation Plan
+# stipple v1 Implementation Plan
 
 A focused braille graphics rendering library for the Maze Wars TUI game.
 
@@ -22,7 +22,7 @@ A focused braille graphics rendering library for the Maze Wars TUI game.
 ## Package Structure
 
 ```
-brodot/
+stipple/
 ├── canvas/
 │   ├── braille.go      # Braille encoding constants and helpers
 │   ├── canvas.go       # Canvas struct and core methods
@@ -221,7 +221,7 @@ Add Bresenham's line algorithm for drawing straight lines between two points.
 ```go
 package draw
 
-import "github.com/cboone/brodot/canvas"
+import "github.com/cboone/stipple/canvas"
 
 // Line draws a line from (startX, startY) to (endX, endY) using Bresenham's algorithm.
 func Line(c *canvas.Canvas, startX, startY, endX, endY float64)
@@ -270,7 +270,7 @@ Add rectangle drawing (outline and filled) for rendering wall faces.
 ```go
 package draw
 
-import "github.com/cboone/brodot/canvas"
+import "github.com/cboone/stipple/canvas"
 
 // Rectangle draws a rectangle outline from (x, y) with the given width and height.
 func Rectangle(c *canvas.Canvas, x, y, width, height float64)
@@ -318,7 +318,7 @@ Add Bresenham's midpoint circle algorithm for drawing circles (eyeball sprites).
 ```go
 package draw
 
-import "github.com/cboone/brodot/canvas"
+import "github.com/cboone/stipple/canvas"
 
 // Circle draws a circle outline centered at (centerX, centerY) with the given radius.
 func Circle(c *canvas.Canvas, centerX, centerY, radius float64)

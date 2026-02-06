@@ -4,7 +4,7 @@ package draw
 import (
 	"math"
 
-	"github.com/cboone/brodot/canvas"
+	"github.com/cboone/stipple/canvas"
 )
 
 // Line draws a line from (startX, startY) to (endX, endY) using Bresenham's algorithm.

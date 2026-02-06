@@ -1,14 +1,14 @@
-# Contributing to brodot
+# Contributing to stipple
 
-Thank you for your interest in contributing to brodot.
+Thank you for your interest in contributing to stipple.
 
 ## Development Setup
 
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/cboone/brodot.git
-   cd brodot
+   git clone https://github.com/cboone/stipple.git
+   cd stipple
    ```
 
 2. Install development tools:

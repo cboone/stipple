@@ -1,10 +1,10 @@
-# brodot
+# stipple
 
 A braille graphics rendering library for Go, designed for terminal-based games and visualizations.
 
 ## Overview
 
-brodot provides pixel-level graphics in the terminal using Unicode braille characters. Each terminal cell displays a 2x4 braille pattern, giving 8x resolution improvement over standard character graphics.
+stipple provides pixel-level graphics in the terminal using Unicode braille characters. Each terminal cell displays a 2x4 braille pattern, giving 8x resolution improvement over standard character graphics.
 
 ## Status
 
@@ -24,7 +24,7 @@ See [docs/plans/PLAN.md](docs/plans/PLAN.md) for the implementation roadmap.
 ## Installation
 
 ```bash
-go get github.com/cboone/brodot
+go get github.com/cboone/stipple
 ```
 
 ## Quick Start
@@ -35,8 +35,8 @@ package main
 import (
     "fmt"
 
-    "github.com/cboone/brodot/canvas"
-    "github.com/cboone/brodot/draw"
+    "github.com/cboone/stipple/canvas"
+    "github.com/cboone/stipple/draw"
 )
 
 func main() {

@@ -1,4 +1,4 @@
-# brodot Roadmap
+# stipple Roadmap
 
 This document defines v1 priorities based on Maze Wars as the primary consumer, plus a roadmap for later major releases.
 
@@ -70,7 +70,7 @@ func Draw(c *canvas.Canvas, x, y float64, content string, font *Font)
 ### Package layout
 
 ```
-brodot/
+stipple/
   canvas/
     braille.go
     canvas.go

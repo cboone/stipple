@@ -3,7 +3,7 @@ package draw
 import (
 	"math"
 
-	"github.com/cboone/brodot/canvas"
+	"github.com/cboone/stipple/canvas"
 )
 
 // Rectangle draws a rectangle outline from (x, y) with the given width and height.

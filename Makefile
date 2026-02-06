@@ -1,4 +1,4 @@
-# brodot Makefile
+# stipple Makefile
 
 .DEFAULT_GOAL := all
 

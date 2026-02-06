@@ -1,4 +1,4 @@
-# golangci-lint configuration for brodot
+# golangci-lint configuration for stipple
 # https://golangci-lint.run/usage/configuration/
 
 version: "2"
@@ -14,7 +14,7 @@ formatters:
   settings:
     goimports:
       local-prefixes:
-        - github.com/cboone/brodot
+        - github.com/cboone/stipple
 
 linters:
   enable:

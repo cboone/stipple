@@ -1,4 +1,4 @@
-# brodot Implementation Plan
+# stipple Implementation Plan
 
 A comprehensive Go port of drawille that incorporates the best features from 20+ implementations across different languages.
 
@@ -21,7 +21,7 @@ This plan synthesizes learnings from the original Python drawille and its ports 
 ### 1.1 Package Structure
 
 ```
-brodot/
+stipple/
 ├── canvas/           # Core canvas implementation
 │   ├── canvas.go     # Main Canvas struct and methods
 │   ├── braille.go    # Braille character encoding/decoding

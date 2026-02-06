@@ -3,7 +3,7 @@ package draw
 import (
 	"math"
 
-	"github.com/cboone/brodot/canvas"
+	"github.com/cboone/stipple/canvas"
 )
 
 // Circle draws a circle outline centered at (centerX, centerY) with the given radius.

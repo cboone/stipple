@@ -1,10 +1,10 @@
-# brodot - Claude Code Instructions
+# stipple - Claude Code Instructions
 
 A braille graphics rendering library in Go, designed for the Maze Wars TUI game.
 
 ## Project Overview
 
-brodot provides pixel-level braille graphics rendering for terminal applications. Each terminal cell displays a 2x4 braille pattern, giving 8x resolution improvement over standard characters.
+stipple provides pixel-level braille graphics rendering for terminal applications. Each terminal cell displays a 2x4 braille pattern, giving 8x resolution improvement over standard characters.
 
 ## Key Documentation
 
@@ -35,7 +35,7 @@ brodot provides pixel-level braille graphics rendering for terminal applications
 ## Package Structure
 
 ```
-brodot/
+stipple/
 ├── canvas/          # Core braille canvas
 │   ├── braille.go   # Braille encoding constants
 │   ├── canvas.go    # Canvas struct and methods

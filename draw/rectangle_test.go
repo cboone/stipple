@@ -3,7 +3,7 @@ package draw
 import (
 	"testing"
 
-	"github.com/cboone/brodot/canvas"
+	"github.com/cboone/stipple/canvas"
 )
 
 func TestRectangle(t *testing.T) {
