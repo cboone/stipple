@@ -29,9 +29,14 @@ coverage:
 demo:
 	go run ./examples/demo/
 
-# Format code
+# Check formatting (exits non-zero if files need formatting)
 .PHONY: fmt
-fmt:
+fmt: ## Check formatting (exits non-zero if files need formatting)
+	@test -z "$$(gofmt -l .)" || { gofmt -l . && exit 1; }
+
+# Format code
+.PHONY: format
+format: ## Format code
 	go fmt ./...
 
 # Show available targets
@@ -43,7 +48,8 @@ help:
 	@echo "  clean        Remove build artifacts"
 	@echo "  coverage     Generate HTML coverage report"
 	@echo "  demo         Run demo program"
-	@echo "  fmt          Format code"
+	@echo "  fmt          Check formatting (exits non-zero if files need formatting)"
+	@echo "  format       Format code"
 	@echo "  help         Show this help message"
 	@echo "  lint         Run golangci-lint"
 	@echo "  test         Run tests with race detector"
