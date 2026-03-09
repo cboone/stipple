@@ -31,12 +31,12 @@ demo:
 
 # Check formatting (exits non-zero if files need formatting)
 .PHONY: fmt
-fmt: ## Check formatting (exits non-zero if files need formatting)
+fmt:
 	@test -z "$$(gofmt -l .)" || { gofmt -l . && exit 1; }
 
 # Format code
 .PHONY: format
-format: ## Format code
+format:
 	go fmt ./...
 
 # Show available targets
