@@ -9,4 +9,4 @@ permissions:
 
 jobs:
   release:
-    uses: cboone/gh-actions/.github/workflows/go-release.yml@v1
+    uses: cboone/gh-actions/.github/workflows/go-release.yml@v2
